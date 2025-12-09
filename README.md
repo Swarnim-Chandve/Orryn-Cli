@@ -74,17 +74,17 @@ Orryn CLI is a full-stack AI-powered command-line tool that brings the power of 
 graph TB
     subgraph "User's Machine"
         CLI[Orryn CLI Tool]
-        TokenFile[Token Storage<br/>~/.better-auth/token]
+        TokenFile["Token Storage ~/.better-auth/token"]
     end
     
     subgraph "Frontend - Next.js"
-        WebApp[Web Dashboard<br/>Port 3000]
+        WebApp["Web Dashboard Port 3000"]
         AuthUI[Authentication UI]
         DevicePage[Device Approval Page]
     end
     
     subgraph "Backend - Express.js"
-        APIServer[API Server<br/>Port 3005]
+        APIServer["API Server Port 3005"]
         AuthHandler[Better Auth Handler]
         ChatService[Chat Service]
         AIService[AI Service]
@@ -129,23 +129,23 @@ graph TB
 ```mermaid
 graph LR
     subgraph "CLI Layer"
-        Main[main.ts<br/>Command Router]
-        LoginCmd[login.ts<br/>Auth Command]
-        WakeUpCmd[wakeUp.ts<br/>AI Command]
-        ChatModule[chat-with-ai.ts<br/>Chat Handler]
-        ToolChat[chat-with-ai-tool.ts<br/>Tool Handler]
-        AgentChat[chat-with-ai-agent.ts<br/>Agent Handler]
+        Main["main.ts Command Router"]
+        LoginCmd["login.ts Auth Command"]
+        WakeUpCmd["wakeUp.ts AI Command"]
+        ChatModule["chat-with-ai.ts Chat Handler"]
+        ToolChat["chat-with-ai-tool.ts Tool Handler"]
+        AgentChat["chat-with-ai-agent.ts Agent Handler"]
     end
     
     subgraph "Service Layer"
-        ChatService[ChatService<br/>Conversation Management]
-        AIService[AIService<br/>Google AI Integration]
-        TokenLib[Token Library<br/>Auth Token Management]
+        ChatService["ChatService Conversation Management"]
+        AIService["AIService Google AI Integration"]
+        TokenLib["Token Library Auth Token Management"]
     end
     
     subgraph "Data Layer"
-        PrismaClient[Prisma Client<br/>Database ORM]
-        Models[Database Models<br/>User, Session, Conversation, Message]
+        PrismaClient["Prisma Client Database ORM"]
+        Models["Database Models User Session Conversation Message"]
     end
     
     Main --> LoginCmd
@@ -190,15 +190,15 @@ sequenceDiagram
     User->>CLI: orryn login
     CLI->>API: Request device code
     API->>DB: Create device code record
-    API-->>CLI: Return user_code & device_code
+    API-->>CLI: Return user_code and device_code
     CLI->>CLI: Display user_code
     CLI->>Web: Open browser with user_code
     User->>Web: Approve login
     Web->>GitHub: OAuth authentication
     GitHub-->>Web: Return auth token
     Web->>API: Update device code status
-    API->>DB: Update device code (approved)
-    CLI->>API: Poll for token (every 5s)
+    API->>DB: Update device code approved
+    CLI->>API: Poll for token every 5s
     API->>DB: Check device code status
     DB-->>API: Device code approved
     API->>DB: Create session
@@ -218,7 +218,7 @@ sequenceDiagram
     participant GoogleAI
     participant DB
     
-    User->>CLI: orryn wakeup → chat
+    User->>CLI: orryn wakeup chat mode
     CLI->>ChatService: Get or create conversation
     ChatService->>DB: Query/create conversation
     DB-->>ChatService: Return conversation
@@ -254,7 +254,7 @@ sequenceDiagram
     participant Tools[Google Tools]
     participant DB
     
-    User->>CLI: orryn wakeup → tools
+    User->>CLI: orryn wakeup tools mode
     CLI->>User: Select tools (multiselect)
     User-->>CLI: Selected tools
     CLI->>ToolConfig: Enable selected tools
@@ -286,7 +286,7 @@ sequenceDiagram
     participant FileSystem
     participant DB
     
-    User->>CLI: orryn wakeup → agent
+    User->>CLI: orryn wakeup agent mode
     CLI->>User: Confirm file system access
     User-->>CLI: Confirm
     CLI->>DB: Create conversation (mode: agent)
